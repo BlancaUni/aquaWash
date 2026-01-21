@@ -1,0 +1,435 @@
+@import "../components/layout/Layout.css";
+
+
+/* Home.css - Landing Page Completa con Paleta Aurora Mist */
+
+/* ===== VARIABLES ESPECÍFICAS DE HOME ===== */
+:root {
+  /* Dimensiones y tamaños específicos de Home */
+  --carousel-height: 350px;
+  --carousel-height-lg: 260px;
+  --carousel-height-md: 80px;
+  --carousel-height-sm: 50px;
+
+  --carousel-btn-size: 32px;
+  --carousel-btn-size-md: 28px;
+  --carousel-btn-size-sm: 24px;
+
+  --indicator-size: 10px;
+  --indicator-size-active: 32px;
+
+  --blur-background: blur(20px);
+  --blur-backdrop: blur(8px);
+
+  --max-width-content: 42rem;
+  --max-width-container: 900px;
+
+  /* Espaciados y fuentes del carrusel */
+  --carousel-title-size: 1.25rem;
+  /* 20px */
+  --carousel-title-size-md: 1.5rem;
+  /* 24px */
+  --carousel-title-size-lg: 2rem;
+  /* 32px */
+  --carousel-desc-size: 1rem;
+  /* 16px */
+  --carousel-desc-size-md: 1.125rem;
+  /* 18px */
+  --carousel-desc-size-lg: 1.25rem;
+  /* 20px */
+  --carousel-btn-font-size: 1rem;
+  /* 16px */
+  --carousel-btn-font-size-sm: 0.875rem;
+  /* 14px */
+  --carousel-btn-padding-x: 2rem;
+  --carousel-btn-padding-y: 0.75rem;
+  --carousel-btn-padding-x-sm: 1.5rem;
+  --carousel-btn-padding-y-sm: 0.5rem;
+
+  /* Colores específicos si los hubiera */
+  /* (No hay colores nuevos, todos usan --app-color-* o --app-overlay-* definidos en Layout.css) */
+}
+
+/* ===== GENERAL ===== */
+.app-container {
+  @apply min-h-screen;
+  background: linear-gradient(135deg, var(--app-color-light) 0%, var(--app-color-accent) 100%);
+}
+
+/* ===== HERO SECTION ===== */
+.home-hero {
+  padding-top: 100px;
+}
+
+.home-carousel-wrapper {
+  @apply relative w-full overflow-hidden;
+  background-color: var(--app-color-primary);
+  height: 350px;
+}
+
+.home-carousel-track {
+  @apply relative w-full h-full;
+}
+
+.home-carousel-slide {
+  @apply absolute inset-0 opacity-0 transition-opacity duration-700;
+}
+
+.home-carousel-slide.active {
+  @apply opacity-100;
+}
+
+/* Background image - full cover with blur */
+.home-carousel-bg {
+  @apply absolute inset-0 w-full h-full object-cover;
+  filter: var(--blur-background);
+  transform: scale(1.1);
+}
+
+/* Main image - centered 16:9 */
+.home-carousel-img {
+  @apply absolute inset-0 w-full h-full object-contain;
+}
+
+.home-carousel-overlay {
+  @apply absolute inset-0;
+  background: linear-gradient(to right, var(--app-overlay-primary), var(--app-overlay-secondary));
+}
+
+.home-carousel-content {
+  @apply absolute inset-0 px-56 md:px-72;
+  white-space: nowrap;
+  max-width: 600px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  justify-items: start;
+}
+
+.home-carousel-title {
+  @apply text-xl md:text-2xl font-bold text-left;
+  color: var(--app-color-white);
+  max-width: var(--max-width-content);
+  padding-block-end: 1rem;
+}
+
+.home-carousel-description {
+  @apply text-lg md:text-xl text-left;
+  color: var(--app-overlay-white-90);
+  max-width: var(--max-width-content);
+  padding-block-end: 1.5rem;
+}
+
+.home-carousel-actions {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1rem;
+  justify-content: start;
+}
+
+.home-btn-cta-primary {
+  @apply px-8 py-3 text-base font-semibold rounded-lg transition-all duration-300 cursor-pointer;
+  background-color: var(--app-color-secondary);
+  color: var(--app-color-white);
+  box-shadow: var(--app-shadow-lg);
+}
+
+.home-btn-cta-primary:hover {
+  background-color: var(--app-color-accent);
+  box-shadow: var(--app-shadow-lg-hover);
+  transform: translateY(-2px);
+}
+
+.home-btn-cta-secondary {
+  @apply px-8 py-3 text-base font-semibold rounded-lg transition-all duration-300 cursor-pointer;
+  background-color: var(--app-overlay-light);
+  color: var(--app-color-white);
+  border: 2px solid var(--app-color-white);
+  backdrop-filter: var(--blur-backdrop);
+}
+
+.home-btn-cta-secondary:hover {
+  background-color: var(--app-overlay-light-2);
+}
+
+/* Carousel Controls */
+.home-carousel-btn {
+  @apply absolute top-1/2 -translate-y-1/2 rounded-full shadow-lg transition-all duration-300 cursor-pointer;
+  background-color: var(--app-overlay-white-95);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  backdrop-filter: var(--blur-backdrop);
+  color: var(--app-color-primary);
+}
+
+.home-carousel-btn:hover {
+  background-color: var(--app-color-white);
+  box-shadow: var(--app-shadow-xl);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.home-carousel-btn-prev {
+  left: 24px;
+}
+
+.home-carousel-btn-next {
+  right: 24px;
+}
+
+.home-carousel-indicators {
+  @apply absolute bottom-8 left-1/2 -translate-x-1/2;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.75rem;
+}
+
+.home-indicator {
+  @apply rounded-full transition-all duration-300 cursor-pointer;
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  background-color: var(--app-overlay-bg);
+}
+
+.home-indicator:hover {
+  background-color: var(--app-overlay-bg-hover);
+  transform: scale(1.2);
+}
+
+.home-indicator.active {
+  width: var(--indicator-size-active);
+  background-color: var(--app-color-white);
+}
+
+/* ===== FEATURES SECTION ===== */
+.home-features {
+  @apply py-8;
+  background-color: var(--app-color-light);
+}
+
+.home-section-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.home-section-header {
+  @apply text-center;
+  padding-block-end: 4rem;
+}
+
+.home-section-title {
+  @apply text-xl md:text-2xl font-bold;
+  color: var(--app-color-primary);
+  padding-block-end: 0.75rem;
+}
+
+.home-section-subtitle {
+  @apply text-base;
+  color: var(--app-color-secondary);
+}
+
+.home-features-grid {
+  @apply grid md:grid-cols-2 lg:grid-cols-4 gap-8;
+}
+
+.home-feature-card {
+  @apply p-6 rounded-xl transition-all duration-300;
+  background-color: var(--app-color-white);
+  box-shadow: var(--app-shadow-card);
+}
+
+.home-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--app-shadow-card-hover);
+}
+
+.home-feature-icon {
+  @apply w-12 h-12 rounded-lg;
+  display: grid;
+  place-items: center;
+  padding-block-end: 1rem;
+  margin-inline: auto;
+}
+
+.home-feature-icon-blue {
+  background-color: var(--app-bg-icon-blue);
+  color: var(--app-color-secondary);
+}
+
+.home-feature-icon-green {
+  background-color: var(--app-bg-icon-green);
+  color: var(--app-color-accent);
+}
+
+.home-feature-icon-purple {
+  background-color: var(--app-bg-icon-purple);
+  color: var(--app-color-muted);
+}
+
+.home-feature-icon-orange {
+  background-color: var(--app-bg-icon-orange);
+  color: var(--app-color-primary);
+}
+
+.home-feature-title {
+  @apply text-base font-bold text-center;
+  color: var(--app-color-primary);
+  padding-block-end: 0.5rem;
+}
+
+.home-feature-description {
+  @apply text-sm text-center;
+  color: var(--app-color-secondary);
+}
+
+/* ===== CTA SECTION ===== */
+.home-cta {
+  @apply py-8;
+  background-color: var(--app-color-secondary);
+}
+
+.home-cta-content {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center;
+}
+
+.home-cta-title {
+  @apply text-xl md:text-2xl font-bold;
+  color: var(--app-color-white);
+  padding-block-end: 0.75rem;
+}
+
+.home-cta-description {
+  @apply text-base;
+  color: var(--app-overlay-white-90);
+  max-width: var(--max-width-content);
+  margin-inline: auto;
+  padding-block-end: 1.5rem;
+}
+
+.home-cta-button {
+  @apply px-8 py-3 text-base font-semibold rounded-lg transition-all duration-300 cursor-pointer;
+  background-color: var(--app-color-white);
+  color: var(--app-color-secondary);
+  box-shadow: var(--app-shadow-lg);
+}
+
+.home-cta-button:hover {
+  background-color: var(--app-color-accent);
+  color: var(--app-color-white);
+  box-shadow: var(--app-shadow-lg-hover);
+  transform: translateY(-2px);
+}
+
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .home-carousel-wrapper {
+    height: 350px;
+  }
+
+  .home-carousel-title {
+    @apply text-3xl;
+  }
+
+  .home-carousel-description {
+    @apply text-lg;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding-top: 64px;
+  }
+
+  .home-carousel-wrapper {
+    height: 80px;
+  }
+
+  .home-carousel-title {
+    @apply text-2xl;
+  }
+
+  .home-carousel-description {
+    @apply text-base;
+  }
+
+  .home-carousel-actions {
+    @apply flex-col;
+  }
+
+  .home-btn-cta-primary,
+  .home-btn-cta-secondary {
+    @apply w-full text-center;
+  }
+
+  .home-carousel-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .home-carousel-btn-prev {
+    left: 16px;
+  }
+
+  .home-carousel-btn-next {
+    right: 16px;
+  }
+
+  .home-features {
+    @apply py-12;
+  }
+
+  .home-section-header {
+    padding-block-end: 3rem;
+  }
+
+  .home-section-title {
+    @apply text-2xl;
+  }
+
+  .home-section-subtitle {
+    @apply text-base;
+  }
+
+  .home-cta {
+    @apply py-12;
+  }
+
+  .home-cta-title {
+    @apply text-2xl;
+  }
+
+  .home-cta-description {
+    @apply text-base;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-carousel-wrapper {
+    height: 50px;
+  }
+
+  .home-carousel-title {
+    @apply text-xl;
+  }
+
+  .home-carousel-description {
+    @apply text-sm;
+  }
+
+  .home-carousel-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .home-carousel-btn-prev {
+    left: 12px;
+  }
+
+  .home-carousel-btn-next {
+    right: 12px;
+  }
+}
